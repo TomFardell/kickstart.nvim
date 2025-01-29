@@ -890,6 +890,19 @@ require('lazy').setup({
     ft = { 'markdown' },
   },
 
+  -- GLSL syntax highlighting
+  {
+    'tikhomirov/vim-glsl',
+    config = function()
+      vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
+        pattern = { '*.vc', '*.fs' },
+        callback = function()
+          vim.opt.ft = 'glsl'
+        end,
+      })
+    end,
+  },
+
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
     config = function()
