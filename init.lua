@@ -365,6 +365,7 @@ require('lazy').setup({
       spec = {
         { '<leader>s', group = '[S]earch' },
         { '<leader>t', group = '[T]oggle' },
+        { '<leader>d', group = '[D]ebug' },
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
       },
     },
@@ -519,6 +520,73 @@ require('lazy').setup({
     'mrcjkb/rustaceanvim',
     version = '^6', -- Recommended
     lazy = false, -- This plugin is already lazy
+  },
+
+  {
+    'jay-babu/mason-nvim-dap.nvim',
+    event = 'VeryLazy',
+    dependencies = {
+      'mfussenegger/nvim-dap',
+      'williamboman/mason.nvim',
+    },
+    opts = {
+      handlers = {},
+    },
+  },
+  {
+    'mfussenegger/nvim-dap',
+    dependencies = {
+      'leoluz/nvim-dap-go',
+      'rcarriga/nvim-dap-ui',
+      'theHamsta/nvim-dap-virtual-text',
+      'nvim-neotest/nvim-nio',
+      'williamboman/mason.nvim',
+    },
+    config = function()
+      local dap = require 'dap'
+      local ui = require 'dapui'
+
+      require('dapui').setup()
+      require('dap-go').setup()
+      require('nvim-dap-virtual-text').setup {}
+
+      -- Handled by nvim-dap-go
+      -- dap.adapters.go = {
+      --   type = "server",
+      --   port = "${port}",
+      --   executable = {
+      --     command = "dlv",
+      --     args = { "dap", "-l", "127.0.0.1:${port}" },
+      --   },
+      -- }
+
+      -- Eval var under cursor
+      vim.keymap.set('n', '<leader>?', function()
+        require('dapui').eval(nil, { enter = true })
+      end, { desc = 'Eval var under cursor' })
+
+      vim.keymap.set('n', '<leader>db', dap.toggle_breakpoint, { desc = 'Toggle [B]reakpoint' })
+      vim.keymap.set('n', '<Leader>dc', dap.continue, { desc = '[C]ontinue' })
+      vim.keymap.set('n', '<Leader>di', dap.step_into, { desc = 'Step [I]nto' })
+      vim.keymap.set('n', '<Leader>do', dap.step_over, { desc = 'Step [O]ver' })
+      vim.keymap.set('n', '<Leader>du', dap.step_out, { desc = 'Step o[U]t' })
+      vim.keymap.set('n', '<Leader>da', dap.step_back, { desc = 'Step b[A]ck' })
+      vim.keymap.set('n', '<Leader>dr', dap.restart, { desc = '[R]estart' })
+      vim.keymap.set('n', '<Leader>dt', dap.terminate, { desc = '[T]erminate' })
+
+      dap.listeners.before.attach.dapui_config = function()
+        ui.open()
+      end
+      dap.listeners.before.launch.dapui_config = function()
+        ui.open()
+      end
+      dap.listeners.before.event_terminated.dapui_config = function()
+        ui.close()
+      end
+      dap.listeners.before.event_exited.dapui_config = function()
+        ui.close()
+      end
+    end,
   },
 
   {
@@ -720,6 +788,8 @@ require('lazy').setup({
         clangd = {
           cmd = { 'clangd', '--header-insertion=never' },
         },
+        codelldb = {},
+        cmake = {},
         -- gopls = {},
         -- pyright = {},
         pylsp = {},
