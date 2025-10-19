@@ -804,6 +804,7 @@ require('lazy').setup({
         -- ts_ls = {},
         --
         omnisharp = {},
+        asm_lsp = {},
 
         lua_ls = {
           -- cmd = { ... },
