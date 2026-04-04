@@ -324,7 +324,7 @@ require('lazy').setup({
       spec = {
         { '<leader>s', group = '[S]earch', mode = { 'n', 'v' } },
         { '<leader>t', group = '[T]oggle' },
-        { '<leader>d', group = '[D]ebug', mode = {'n', 'v'} },
+        { '<leader>d', group = '[D]ebug', mode = { 'n', 'v' } },
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } }, -- Enable gitsigns recommended keymaps first
         { 'gr', group = 'LSP Actions', mode = { 'n' } },
       },
@@ -483,25 +483,6 @@ require('lazy').setup({
 
       -- Shortcut for searching your Neovim configuration files
       vim.keymap.set('n', '<leader>sn', function() builtin.find_files { cwd = vim.fn.stdpath 'config' } end, { desc = '[S]earch [N]eovim files' })
-    end,
-  },
-
-  -- SQL plugin
-  {
-    'kristijanhusak/vim-dadbod-ui',
-    dependencies = {
-      { 'tpope/vim-dadbod', lazy = true },
-      { 'kristijanhusak/vim-dadbod-completion', ft = { 'sql', 'mysql', 'plsql' }, lazy = true }, -- Optional
-    },
-    cmd = {
-      'DBUI',
-      'DBUIToggle',
-      'DBUIAddConnection',
-      'DBUIFindBuffer',
-    },
-    init = function()
-      -- Your DBUI configuration
-      vim.g.db_ui_use_nerd_fonts = 1
     end,
   },
 
@@ -888,9 +869,7 @@ require('lazy').setup({
     config = function()
       vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
         pattern = { '*.vc', '*.fs' },
-        callback = function()
-          vim.opt.ft = 'glsl'
-        end,
+        callback = function() vim.opt.ft = 'glsl' end,
       })
     end,
   },
