@@ -325,6 +325,7 @@ require('lazy').setup({
         { '<leader>s', group = '[S]earch', mode = { 'n', 'v' } },
         { '<leader>t', group = '[T]oggle' },
         { '<leader>d', group = '[D]ebug', mode = { 'n', 'v' } },
+        { '<leader>v', group = 'Diff[V]iew', mode = { 'n', 'v' } },
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } }, -- Enable gitsigns recommended keymaps first
         { 'gr', group = 'LSP Actions', mode = { 'n' } },
       },
@@ -890,6 +891,15 @@ require('lazy').setup({
         callback = function() vim.opt.ft = 'glsl' end,
       })
     end,
+  },
+
+  -- Git diffview
+  {
+    'sindrets/diffview.nvim',
+
+    -- Open diffview keymaps
+    vim.keymap.set('n', '<leader>vo', '<cmd>DiffviewOpen<CR>', { desc = '[O]pen Diffview' }),
+    vim.keymap.set('n', '<leader>vc', '<cmd>DiffviewClose<CR>', { desc = '[C]lose Diffview' }),
   },
 
   { -- Collection of various small independent plugins/modules
