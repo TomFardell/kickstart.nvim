@@ -325,7 +325,7 @@ require('lazy').setup({
         { '<leader>s', group = '[S]earch', mode = { 'n', 'v' } },
         { '<leader>t', group = '[T]oggle' },
         { '<leader>d', group = '[D]ebug', mode = { 'n', 'v' } },
-        { '<leader>v', group = 'Diff[V]iew', mode = { 'n', 'v' } },
+        { '<leader>m', group = '[M]ini', mode = { 'n', 'v' } },
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } }, -- Enable gitsigns recommended keymaps first
         { 'gr', group = 'LSP Actions', mode = { 'n' } },
       },
@@ -893,13 +893,22 @@ require('lazy').setup({
     end,
   },
 
-  -- Git diffview
+  -- Mini.diff plugin
   {
-    'sindrets/diffview.nvim',
-
-    -- Open diffview keymaps
-    vim.keymap.set('n', '<leader>vo', '<cmd>DiffviewOpen<CR>', { desc = '[O]pen Diffview' }),
-    vim.keymap.set('n', '<leader>vc', '<cmd>DiffviewClose<CR>', { desc = '[C]lose Diffview' }),
+    'nvim-mini/mini.diff',
+    event = 'VeryLazy',
+    keys = {
+      {
+        '<leader>md',
+        function() require('mini.diff').toggle_overlay(0) end,
+        desc = 'Toggle mini.[D]iff overlay',
+      },
+    },
+    opts = {
+      view = {
+        style = 'number',
+      },
+    },
   },
 
   { -- Collection of various small independent plugins/modules
