@@ -165,12 +165,16 @@ do
   vim.o.cursorline = true
 
   -- Minimal number of screen lines to keep above and below the cursor.
-  vim.o.scrolloff = 10
+  vim.o.scrolloff = 4
 
   -- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
   -- instead raise a dialog asking if you wish to save the current file(s)
   -- See `:help 'confirm'`
   vim.o.confirm = true
+
+  vim.o.tabstop = 2
+  vim.o.shiftwidth = 2
+  vim.o.expandtab = true
 
   -- [[ Basic Keymaps ]]
   --  See `:help vim.keymap.set()`
@@ -896,6 +900,16 @@ do
 
     -- Shows a signature help window while you type arguments for a function
     signature = { enabled = true },
+  }
+
+  vim.pack.add { gh 'windwp/nvim-ts-autotag' }
+  require('nvim-ts-autotag').setup {
+    opts = {
+      -- Defaults
+      enable_close = true, -- Auto close tags
+      enable_rename = true, -- Auto rename pairs of tags
+      enable_close_on_slash = true, -- Auto close on trailing </
+    },
   }
 end
 
