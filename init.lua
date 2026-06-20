@@ -395,6 +395,7 @@ do
     },
     highlights = {
       ['@comment'] = { fg = '$grey' },
+      ['@lsp.type.comment.c'] = { fg = '$grey' },
     },
   }
 
