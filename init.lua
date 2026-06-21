@@ -171,11 +171,12 @@ do
   -- instead raise a dialog asking if you wish to save the current file(s)
   -- See `:help 'confirm'`
   vim.o.confirm = true
-end
 
   vim.o.tabstop = 2
   vim.o.shiftwidth = 2
-  vim.o.expandtab = true
+
+  vim.o.winborder = 'rounded'
+end
 
 -- ============================================================
 -- SECTION 2: KEYMAPS
@@ -707,6 +708,7 @@ do
   --  See `:help lsp-config` for information about keys and how to configure
   ---@type table<string, vim.lsp.Config>
   local servers = {
+    -- List these with :help lspconfig-all
     clangd = {},
     -- gopls = {},
     pyright = {},
@@ -718,9 +720,8 @@ do
     -- But for many setups, the LSP (`ts_ls`) will work just fine
     -- ts_ls = {},
 
-    html = {},
-
     stylua = {}, -- Used to format Lua code
+    superhtml = {},
 
     -- Special Lua Config, as recommended by neovim help docs
     lua_ls = {
@@ -922,6 +923,9 @@ do
       enable_close_on_slash = true, -- Auto close on trailing </
     },
   }
+
+  -- Consitent tabs and spaces for different file-types
+  vim.pack.add { gh 'tpope/vim-sleuth' }
 end
 
 -- ============================================================
